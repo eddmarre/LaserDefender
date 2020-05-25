@@ -5,9 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float padding = 1f;
+    float xMin;
+    float xMax;
+    float ymin;
+    float yMax;
     void Start()
     {
-
+        SetUpMoveBoundaries();
     }
 
 
@@ -20,10 +25,19 @@ public class Player : MonoBehaviour
     {
 
         var deltaX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
-        var newXPos = transform.position.x + deltaX;
+        var newXPos = Mathf.Clamp(transform.position.x + deltaX, xMin, xMax);
 
         var deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
-        var nexYPos = transform.position.y + deltaY;
+        var nexYPos = Mathf.Clamp(transform.position.y + deltaY, ymin, yMax);
         transform.position = new Vector2(newXPos, nexYPos);
+    }
+
+    void SetUpMoveBoundaries()
+    {
+        Camera gameCamera = Camera.main;
+        xMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + padding;
+        xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - padding;
+        ymin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + padding;
+        yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;
     }
 }
