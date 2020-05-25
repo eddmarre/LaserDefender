@@ -14,7 +14,7 @@ public class EnemyPathing : MonoBehaviour
         transform.position = waypoints[waypointIndex].transform.position;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         Move();
