@@ -109,6 +109,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  EnemyLaserPrefab: {fileID: 1670142106798055193, guid: 0f89a8ccc7efe6c469fd349079ce20e8,
+    type: 3}
+  projectileSpeed: 10
 --- !u!60 &2493465618782820449
 PolygonCollider2D:
   m_ObjectHideFlags: 0
