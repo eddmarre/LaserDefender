@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player")]
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float padding = 1f;
+    [SerializeField] int health = 200;
+
+    [Header("Projectile")]
     [SerializeField] float projectileSpeed = 10f;
+
     [SerializeField] GameObject laserPrefab;
     [SerializeField] float projectileFiringPeriod = .1f;
     Coroutine firingCoroutine;
@@ -43,9 +48,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            firingCoroutine=StartCoroutine(FireContinously());
+            firingCoroutine = StartCoroutine(FireContinously());
         }
-        if(Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1"))
         {
             StopCoroutine(firingCoroutine);
         }
@@ -70,5 +75,21 @@ public class Player : MonoBehaviour
         xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - padding;
         ymin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + padding;
         yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;
+    }
+
+        private void OnTriggerEnter2D(Collider2D other)
+    {
+        //get damamge dealer from bullets
+        DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+        ProcessHit(damageDealer);
+    }
+
+    private void ProcessHit(DamageDealer damageDealer)
+    {
+        health -= damageDealer.GetDamage();
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
