@@ -42,12 +42,14 @@ public class Enemy : MonoBehaviour
     {
         //get damamge dealer from bullets
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+         if (!damageDealer) { return; }
         ProcessHit(damageDealer);
     }
 
     private void ProcessHit(DamageDealer damageDealer)
     {
         health -= damageDealer.GetDamage();
+        damageDealer.hit();
         if (health <= 0)
         {
             Destroy(gameObject);
