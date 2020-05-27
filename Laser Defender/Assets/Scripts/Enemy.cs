@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     float shotCounter;
     [SerializeField] GameObject EnemyLaserPrefab;
     [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] GameObject deathVFX;
+    [SerializeField] float durationOfExplosion = 1f;
     float minTimeBetweenShots = .2f;
     float maxTimeBetweenShots = 3f;
     private void Start()
@@ -42,7 +44,7 @@ public class Enemy : MonoBehaviour
     {
         //get damamge dealer from bullets
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-         if (!damageDealer) { return; }
+        if (!damageDealer) { return; }
         ProcessHit(damageDealer);
     }
 
@@ -52,7 +54,15 @@ public class Enemy : MonoBehaviour
         damageDealer.hit();
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+
+        Destroy(gameObject);
+        GameObject explosion = Instantiate(deathVFX, transform.position, transform.rotation);
+        Destroy(explosion, durationOfExplosion);
     }
 }
