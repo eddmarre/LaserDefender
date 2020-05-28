@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public void LoadGameScene()
     {
         SceneManager.LoadScene("Game");
+        FindObjectOfType<GameSession>().ResetGame();
     }
 
     public void LoadStartMenu()

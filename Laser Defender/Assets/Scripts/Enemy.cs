@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Enemy Stats")]
     [SerializeField] float health = 100f;
+    [SerializeField] int scoreValue = 150;
+    [Header("Shooting")]
     float shotCounter;
     [SerializeField] GameObject EnemyLaserPrefab;
     [SerializeField] float projectileSpeed = 10f;
@@ -66,7 +69,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-
+        FindObjectOfType<GameSession>().AddToScore(scoreValue);
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, transform.rotation);
         Destroy(explosion, durationOfExplosion);

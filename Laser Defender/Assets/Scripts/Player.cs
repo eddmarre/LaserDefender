@@ -118,4 +118,9 @@ public class Player : MonoBehaviour
 
         //gameManager.LoadGameOver();
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
 }
