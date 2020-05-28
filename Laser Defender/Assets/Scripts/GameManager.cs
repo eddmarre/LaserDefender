@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] float delayInSeconds = 2f;
     public void LoadGameOver()
     {
+        StartCoroutine(WaitAndLoad());
+    }
+    IEnumerator WaitAndLoad()
+    {
+        yield return new WaitForSeconds(delayInSeconds);
         SceneManager.LoadScene("GG");
     }
 
