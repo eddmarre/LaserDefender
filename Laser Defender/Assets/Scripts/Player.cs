@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] int health = 200;
 
 
+
     [Header("Projectile")]
     [SerializeField] float projectileSpeed = 10f;
 
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     [Range(0, 1)] [SerializeField] float laserSoundVolume = .25f;
     [SerializeField] AudioClip deathSFX;
     [Range(0, 1)] [SerializeField] float deathSoundVolume = .7f;
+    GameManager gameManager;
 
     Coroutine firingCoroutine;
     float xMin;
@@ -33,7 +35,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         SetUpMoveBoundaries();
-
+        gameManager = FindObjectOfType<GameManager>();
     }
 
 
@@ -113,5 +115,13 @@ public class Player : MonoBehaviour
         GameObject explosion = Instantiate(deathVFX, transform.position, transform.rotation);
         Destroy(explosion, durationOfExplosion);
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
+
+        Invoke("GameOver",1f);
+        //gameManager.LoadGameOver();
+    }
+
+    void GameOver()
+    {
+        gameManager.LoadGameOver();
     }
 }
